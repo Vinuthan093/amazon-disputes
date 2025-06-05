@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <div class="flex justify-between items-center mb-6">
+        <h1 class="text-2xl font-bold text-gray-900">Dispute Cases</h1>
+        <button onclick="openModal()"
+                class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700">
+            Create New Case
+        </button>
+    </div>
+
+    <div id="dispute-list-body">
+        {% include "disputes/partials/dispute_list_partial.html" %}
+    </div>
+
+    {% include "disputes/partials/dispute_form.html" %}
+</div>
+
+<script>
+    function openModal() {
+        const modal = document.getElementById('create-dispute-modal');
+        modal.classList.remove('hidden');
+    }
+</script>
+{% endblock %} 

@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <div class="mb-6">
+        <a href="{% url 'core:dispute_list' %}" class="text-indigo-600 hover:text-indigo-900">
+            ← Back to Disputes
+        </a>
+    </div>
+
+    <div class="bg-white shadow-md rounded-lg overflow-hidden">
+        <!-- Header -->
+        <div class="px-6 py-4 border-b border-gray-200">
+            <div class="flex justify-between items-center">
+                <h1 class="text-2xl font-bold text-gray-900">
+                    Dispute for Order {{ dispute.linked_return.order.order_id }}
+                </h1>
+                <span class="px-3 py-1 rounded-full text-sm font-semibold
+                    {% if dispute.status == 'pending' %}bg-yellow-100 text-yellow-800
+                    {% elif dispute.status == 'under_review' %}bg-blue-100 text-blue-800
+                    {% elif dispute.status == 'resolved' %}bg-green-100 text-green-800
+                    {% elif dispute.status == 'rejected' %}bg-red-100 text-red-800
+                    {% else %}bg-gray-100 text-gray-800{% endif %}">
+                    {{ dispute.get_status_display }}
+                </span>
+            </div>
+        </div>
+
+        <!-- Details -->
+        <div class="px-6 py-4">
+            <div class="grid grid-cols-2 gap-6">
+                <div>
+                    <h2 class="text-lg font-semibold text-gray-900 mb-4">Dispute Details</h2>
+                    <dl class="space-y-4">
+                        <div>
+                            <dt class="text-sm font-medium text-gray-500">Order ID</dt>
+                            <dd class="mt-1 text-sm text-gray-900">{{ dispute.linked_return.order.order_id }}</dd>
+                        </div>
+                        <div>
+                            <dt class="text-sm font-medium text-gray-500">Item</dt>
+                            <dd class="mt-1 text-sm text-gray-900">{{ dispute.linked_return.order.item_name }}</dd>
+                        </div>
+                        <div>
+                            <dt class="text-sm font-medium text-gray-500">Reason</dt>
+                            <dd class="mt-1 text-sm text-gray-900">{{ dispute.reason }}</dd>
+                        </div>
+                        <div>
+                            <dt class="text-sm font-medium text-gray-500">Priority</dt>
+                            <dd class="mt-1 text-sm text-gray-900">{{ dispute.get_priority_display }}</dd>
+                        </div>
+                        <div>
+                            <dt class="text-sm font-medium text-gray-500">Assigned To</dt>
+                            <dd class="mt-1 text-sm text-gray-900">{{ dispute.assigned_to|default:"Not assigned" }}</dd>
+                        </div>
+                    </dl>
+                </div>
+                <div>
+                    <h2 class="text-lg font-semibold text-gray-900 mb-4">Timeline</h2>
+                    <div class="space-y-4">
+                        {% for tracking in tracking_history %}
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0">
+                                <div class="h-8 w-8 rounded-full bg-gray-200 flex items-center justify-center">
+                                    <span class="text-sm font-medium text-gray-600">{{ forloop.counter }}</span>
+                                </div>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm font-medium text-gray-900">{{ tracking.get_status_display }}</p>
+                                <p class="text-sm text-gray-500">{{ tracking.description }}</p>
+                                <p class="text-xs text-gray-400">{{ tracking.created_at|date:"M d, Y H:i" }}</p>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notes -->
+        <div class="px-6 py-4 border-t border-gray-200">
+            <h2 class="text-lg font-semibold text-gray-900 mb-4">Notes</h2>
+            <div class="space-y-4">
+                {% for note in notes %}
+                <div class="bg-gray-50 rounded-lg p-4">
+                    <div class="flex justify-between items-start">
+                        <p class="text-sm text-gray-900">{{ note.note }}</p>
+                        <span class="text-xs text-gray-500">{{ note.created_at|date:"M d, Y H:i" }}</span>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-2">By: {{ note.created_by }}</p>
+                </div>
+                {% empty %}
+                <p class="text-sm text-gray-500">No notes yet.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 
