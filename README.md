@@ -98,13 +98,7 @@ amazon_disputes/
 4. Push to the branch
 5. Create a Pull Request
 
-## License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## Support
-
-For support, please open an issue in the GitHub repository or contact the maintainers.
 
 ## Security
 
@@ -113,12 +107,7 @@ For support, please open an issue in the GitHub repository or contact the mainta
 - File uploads are validated and sanitized
 - Regular security updates are implemented
 
-## Development Guidelines
 
-1. Follow PEP 8 style guide for Python code
-2. Write unit tests for new features
-3. Document all new functions and classes
-4. Keep the codebase clean and maintainable
 
 ## Deployment
 
@@ -139,17 +128,6 @@ SECRET_KEY=your-secret-key
 DATABASE_URL=your-database-url
 ```
 
-## Maintenance
 
-- Regular database backups
-- Monitor system logs
-- Update dependencies regularly
-- Perform security audits
 
-## Future Enhancements
 
-- API integration with Amazon Seller Central
-- Automated dispute tracking
-- Advanced analytics and reporting
-- Mobile application
-- Multi-language support 
